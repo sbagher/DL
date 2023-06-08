@@ -28,3 +28,9 @@ def train(X, y, n_hidden, learning_rate, n_iter):
     W2 = W2 - learning_rate * dW2 / m
     b2 = b2 - learning_rate * db2 / m
     W1 = W1 - learning_rate * dW1 / m
+    b1 = b1 - learning_rate * db1 / m
+    if i % 100 == 0:
+    cost = np.mean((y - A3) ** 2)
+    print('Iteration %i, training loss: %f' %(i, cost))
+    model = {'W1':W1, 'b1': b1, 'W2': W2, 'b2': b2}
+    return model
