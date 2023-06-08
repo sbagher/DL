@@ -3,6 +3,7 @@
 # Class: Deep Learning
 # Assignment: Project: 02, Chapter: 08, Book: "Python Machine Learning By Example"
 import numpy as np
+from sklearn.datasets import load_boston
 
 def sigmoid(z):
     return 1.0 / (1 + np.exp(-z))
