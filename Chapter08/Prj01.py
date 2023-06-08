@@ -3,8 +3,8 @@
 # Class: Deep Learning
 # Assignment: Project: 02, Chapter: 08, Book: "Python Machine Learning By Example"
 import numpy as np
-from sklearn.datasets import load_boston
-from sklearn.preprocessing import preprocessing
+from sklearn import preprocessing
+import pandas as pd
 
 def sigmoid(z):
     return 1.0 / (1 + np.exp(-z))
@@ -35,16 +35,27 @@ def train(X, y, n_hidden, learning_rate, n_iter):
         b1 = b1 - learning_rate * db1 / m
         if i % 100 == 0:
             cost = np.mean((y - A3) ** 2)
-            print('Iteration %i, training loss: %f' %(i, cost))
+            print('Iteration %i, training loss: %f' %
+                  (i, cost))
     model = {'W1':W1, 'b1': b1, 'W2': W2, 'b2': b2}
     return model
 
-boston = load_boston()
+
+
+data_url = "http://lib.stat.cmu.edu/datasets/boston"
+raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
+data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+target = raw_df.values[1::2, 2]
+
 num_test = 10 # the last 10 samples as testing set
 scaler = preprocessing.StandardScaler()
-X_train = boston.data[:-num_test, :]
+X_train = data[:-num_test, :]
 X_train = scaler.fit_transform(X_train)
-y_train = boston.target[:-num_test].reshape(-1, 1)
-X_test = boston.data[-num_test:, :]
+y_train = target[:-num_test].reshape(-1, 1)
+X_test = data[-num_test:, :]
 X_test = scaler.transform(X_test)
-y_test = boston.target[-num_test:]
+y_test = target[-num_test:]
+n_hidden = 20
+learning_rate = 0.1
+n_iter = 2000
+model = train(X_train, y_train, n_hidden, learning_rate, n_iter)
