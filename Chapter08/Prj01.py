@@ -4,6 +4,7 @@
 # Assignment: Project: 02, Chapter: 08, Book: "Python Machine Learning By Example"
 import numpy as np
 from sklearn.datasets import load_boston
+from sklearn.preprocessing import preprocessing
 
 def sigmoid(z):
     return 1.0 / (1 + np.exp(-z))
@@ -37,3 +38,13 @@ def train(X, y, n_hidden, learning_rate, n_iter):
             print('Iteration %i, training loss: %f' %(i, cost))
     model = {'W1':W1, 'b1': b1, 'W2': W2, 'b2': b2}
     return model
+
+boston = load_boston()
+num_test = 10 # the last 10 samples as testing set
+scaler = preprocessing.StandardScaler()
+X_train = boston.data[:-num_test, :]
+X_train = scaler.fit_transform(X_train)
+y_train = boston.target[:-num_test].reshape(-1, 1)
+X_test = boston.data[-num_test:, :]
+X_test = scaler.transform(X_test)
+y_test = boston.target[-num_test:]
