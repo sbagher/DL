@@ -2,6 +2,7 @@
 # Student Number: 102501002
 # Class: Deep Learning
 # Assignment: Project: 01, Chapter: 08, Book: "Python Machine Learning By Example"
+import numpy as np
 
 def sigmoid(z):
     return 1.0 / (1 + np.exp(-z))
