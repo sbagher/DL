@@ -100,3 +100,10 @@ scaler = StandardScaler()
 X_scaled_train = scaler.fit_transform(X_train)
 X_scaled_test = scaler.transform(X_test)
 
+param_grid = {
+    "alpha": [1e-4, 3e-4, 1e-3],
+    "eta0": [0.01, 0.03, 0.1],
+    }
+lr = SGDRegressor(penalty='l2', max_iter=1000, random_state=42)
+grid_search = GridSearchCV(lr, param_grid, cv=5, scoring='r2')
+grid_search.fit(X_scaled_train, y_train)
