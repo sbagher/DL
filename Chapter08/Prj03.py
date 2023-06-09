@@ -23,6 +23,7 @@ X_test = data[-num_test:, :]
 X_test = scaler.transform(X_test)
 y_test = target[-num_test:]
 
+tf.random.set_seed(42)
 model = keras.Sequential([
     keras.layers.Dense(units=20, activation='relu'),
     keras.layers.Dense(units=8, activation='relu'),
