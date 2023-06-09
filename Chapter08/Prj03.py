@@ -8,8 +8,8 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow import keras
 
-# data_url = "http://lib.stat.cmu.edu/datasets/boston"
-data_url = "boston"
+data_url = "http://lib.stat.cmu.edu/datasets/boston"
+# data_url = "boston"
 raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
 data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
 target = raw_df.values[1::2, 2]
@@ -23,8 +23,17 @@ X_test = data[-num_test:, :]
 X_test = scaler.transform(X_test)
 y_test = target[-num_test:]
 
+model = keras.Sequential([
+    keras.layers.Dense(units=20, activation='relu'),
+    keras.layers.Dense(units=8, activation='relu'),
+    keras.layers.Dense(units=1)
+])
 
+model.compile(loss='mean_squared_error',
+              optimizer=tf.keras.optimizers.Adam(0.02))
 
+model.fit(X_train, y_train, epochs=300)
+predictions = model.predict(X_test)[:, 0]
 
 print(predictions)
 print(y_test)
