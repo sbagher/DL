@@ -37,5 +37,5 @@ nn_scikit.fit(X_train, y_train.ravel())
 predictions = nn_scikit.predict(X_test)
 print(predictions)
 print(y_test)
- 
+
 print(np.mean((y_test - predictions) ** 2))
