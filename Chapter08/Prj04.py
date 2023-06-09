@@ -3,6 +3,7 @@
 # Class: Deep Learning
 # Assignment: Project: 04, Chapter: 08, Book: "Python Machine Learning By Example"
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 def add_original_feature(df, df_new):
     df_new['open'] = df['Open']
@@ -82,10 +83,20 @@ print(data.round(decimals=3).head(5))
 data = generate_features(data_raw)
 start_train = '1993-01-01'
 end_train = '2021-12-31'
-start_test = '2022-01-01'
-end_test = '2022-12-31'
 data_train = data.loc[start_train:end_train]
 X_train = data_train.drop('close', axis=1).values
 y_train = data_train['close'].values
+start_test = '2022-01-01'
+end_test = '2022-12-31'
+data_test = data.loc[start_test:end_test]
+X_test = data_test.drop('close', axis=1).values
+y_test = data_test['close'].values
 print(X_train.shape)
 print(y_train.shape)
+print(X_test.shape)
+print(y_test.shape)
+
+scaler = StandardScaler()
+X_scaled_train = scaler.fit_transform(X_train)
+X_scaled_test = scaler.transform(X_test)
+
