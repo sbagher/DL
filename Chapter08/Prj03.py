@@ -4,8 +4,9 @@
 # Assignment: Project: 04, Chapter: 08, Book: "Python Machine Learning By Example"
 import numpy as np
 from sklearn import preprocessing
-import tensorflow as tf
 import pandas as pd
+import tensorflow as tf
+from tensorflow import keras
 
 # data_url = "http://lib.stat.cmu.edu/datasets/boston"
 data_url = "boston"
