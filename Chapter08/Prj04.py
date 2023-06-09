@@ -9,6 +9,7 @@ from sklearn.linear_model import SGDRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR
 
 def add_original_feature(df, df_new):
     df_new['open'] = df['Open']
@@ -142,4 +143,15 @@ param_grid = [
     {'kernel': ['linear'], 'C': [100, 300, 500], 'epsilon': [0.00003, 0.0001]},
     {'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],'C': [10, 100, 1000], 'epsilon': [0.00003, 0.0001]}
 ]
+
+svr = SVR()
+grid_search = GridSearchCV(svr, param_grid, cv=5, scoring='r2')
+grid_search.fit(X_scaled_train, y_train)
+
+print(grid_search.best_params_)
+svr_best = grid_search.best_estimator_
+predictions_svr = svr_best.predict(X_scaled_test)
+print(f'MSE: {mean_squared_error(y_test, predictions_svr):.3f}')
+print(f'MAE: {mean_absolute_error(y_test, predictions_svr):.3f}')
+print(f'R^2: {r2_score(y_test, predictions_svr):.3f}')
 
