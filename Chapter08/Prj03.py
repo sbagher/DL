@@ -4,14 +4,8 @@
 # Assignment: Project: 04, Chapter: 08, Book: "Python Machine Learning By Example"
 import numpy as np
 from sklearn import preprocessing
-from sklearn.neural_network import MLPRegressor
+import tensorflow as tf
 import pandas as pd
-
-def sigmoid(z):
-    return 1.0 / (1 + np.exp(-z))
-
-def sigmoid_derivative(z):
-    return sigmoid(z) * (1.0 - sigmoid(z))
 
 # data_url = "http://lib.stat.cmu.edu/datasets/boston"
 data_url = "boston"
