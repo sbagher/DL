@@ -45,7 +45,8 @@ def predict(x, model):
     b1 = model['b1']
     W2 = model['W2']
     b2 = model['b2']
-    A2 = sigmoid(np.matmul(x, W1) + b1) A3 = np.matmul(A2, W2) + b2
+    A2 = sigmoid(np.matmul(x, W1) + b1)
+    A3 = np.matmul(A2, W2) + b2
     return A3
 
 # data_url = "http://lib.stat.cmu.edu/datasets/boston"
@@ -66,3 +67,7 @@ n_hidden = 20
 learning_rate = 0.1
 n_iter = 2000
 model = train(X_train, y_train, n_hidden, learning_rate, n_iter)
+
+predictions = predict(X_test, model)
+print(predictions)
+print(y_test)
