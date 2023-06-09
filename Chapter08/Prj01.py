@@ -49,8 +49,8 @@ def predict(x, model):
     A3 = np.matmul(A2, W2) + b2
     return A3
 
-# data_url = "http://lib.stat.cmu.edu/datasets/boston"
-data_url = "boston"
+data_url = "http://lib.stat.cmu.edu/datasets/boston"
+# data_url = "boston"
 raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
 data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
 target = raw_df.values[1::2, 2]
@@ -71,3 +71,4 @@ model = train(X_train, y_train, n_hidden, learning_rate, n_iter)
 predictions = predict(X_test, model)
 print(predictions)
 print(y_test)
+print(np.mean((y_test - predictions) ** 2))
