@@ -4,6 +4,9 @@
 # Assignment: Project: 04, Chapter: 08, Book: "Python Machine Learning By Example"
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import numpy as np
+from sklearn.linear_model import SGDRegressor
+from sklearn.model_selection import GridSearchCV
 
 def add_original_feature(df, df_new):
     df_new['open'] = df['Open']
