@@ -23,13 +23,9 @@ X_test = data[-num_test:, :]
 X_test = scaler.transform(X_test)
 y_test = target[-num_test:]
 
-nn_scikit = MLPRegressor(hidden_layer_sizes=(16, 8),
-                         activation='relu', solver='adam', 
-                         learning_rate_init=0.001, 
-                         random_state=42, max_iter=2000)
 
-nn_scikit.fit(X_train, y_train.ravel())
-predictions = nn_scikit.predict(X_test)
+
+
 print(predictions)
 print(y_test)
 
