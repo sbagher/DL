@@ -130,3 +130,6 @@ rf = RandomForestRegressor(n_estimators=100, n_jobs=-1, max_features=1.0, random
 grid_search = GridSearchCV(rf, param_grid, cv=5, scoring='r2', n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
+print(grid_search.best_params_)
+rf_best = grid_search.best_estimator_
+predictions_rf = rf_best.predict(X_test)
