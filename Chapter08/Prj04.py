@@ -10,6 +10,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
+import matplotlib.pyplot as plt
 
 def add_original_feature(df, df_new):
     df_new['open'] = df['Open']
@@ -155,3 +156,12 @@ print(f'MSE: {mean_squared_error(y_test, predictions_svr):.3f}')
 print(f'MAE: {mean_absolute_error(y_test, predictions_svr):.3f}')
 print(f'R^2: {r2_score(y_test, predictions_svr):.3f}')
 
+plt.plot(data_test.index, y_test, c='k')
+plt.plot(data_test.index, predictions_lr, c='b')
+plt.plot(data_test.index, predictions_rf, c='r')
+plt.plot(data_test.index, predictions_svr, c='g')
+plt.xticks(range(0, 252, 10), rotation=60)
+plt.xlabel('Date')
+plt.ylabel('Close price')
+plt.legend(['Truth', 'Linear regression', 'Random Forest', 'SVR'])
+plt.show()
