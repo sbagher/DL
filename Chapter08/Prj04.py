@@ -78,3 +78,14 @@ data_raw = pd.read_csv('19930101-20221231.csv', index_col='Date')
 
 data = generate_features(data_raw)
 print(data.round(decimals=3).head(5))
+
+data = generate_features(data_raw)
+start_train = '1993-01-01'
+end_train = '2021-12-31'
+start_test = '2022-01-01'
+end_test = '2022-12-31'
+data_train = data.loc[start_train:end_train]
+X_train = data_train.drop('close', axis=1).values
+y_train = data_train['close'].values
+print(X_train.shape)
+print(y_train.shape)
