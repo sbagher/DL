@@ -126,6 +126,7 @@ param_grid = {
     'min_samples_split': [2, 5, 10],
     'min_samples_leaf': [3, 5]
     }
-rf = RandomForestRegressor(n_estimators=100, n_jobs=-1, max_features='auto', random_state=42)
+rf = RandomForestRegressor(n_estimators=100, n_jobs=-1, max_features=1.0, random_state=42)
 grid_search = GridSearchCV(rf, param_grid, cv=5, scoring='r2', n_jobs=-1)
 grid_search.fit(X_train, y_train)
+
