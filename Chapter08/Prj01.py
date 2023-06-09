@@ -50,7 +50,7 @@ def predict(x, model):
     return A3
 
 data_url = "http://lib.stat.cmu.edu/datasets/boston"
-# data_url = "boston"
+# data_url = "boston.csv"
 raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
 data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
 target = raw_df.values[1::2, 2]
