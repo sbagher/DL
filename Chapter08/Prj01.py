@@ -40,7 +40,13 @@ def train(X, y, n_hidden, learning_rate, n_iter):
     model = {'W1':W1, 'b1': b1, 'W2': W2, 'b2': b2}
     return model
 
-
+def predict(x, model):
+    W1 = model['W1']
+    b1 = model['b1']
+    W2 = model['W2']
+    b2 = model['b2']
+    A2 = sigmoid(np.matmul(x, W1) + b1) A3 = np.matmul(A2, W2) + b2
+    return A3
 
 # data_url = "http://lib.stat.cmu.edu/datasets/boston"
 data_url = "boston"
