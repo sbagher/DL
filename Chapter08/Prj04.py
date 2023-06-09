@@ -133,3 +133,13 @@ grid_search.fit(X_train, y_train)
 print(grid_search.best_params_)
 rf_best = grid_search.best_estimator_
 predictions_rf = rf_best.predict(X_test)
+
+print(f'MSE: {mean_squared_error(y_test, predictions_rf):.3f}')
+print(f'MAE: {mean_absolute_error(y_test, predictions_rf):.3f}')
+print(f'R^2: {r2_score(y_test, predictions_rf):.3f}')
+
+param_grid = [
+    {'kernel': ['linear'], 'C': [100, 300, 500], 'epsilon': [0.00003, 0.0001]},
+    {'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],'C': [10, 100, 1000], 'epsilon': [0.00003, 0.0001]}
+]
+
