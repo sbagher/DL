@@ -7,12 +7,6 @@ from sklearn import preprocessing
 from sklearn.neural_network import MLPRegressor
 import pandas as pd
 
-def sigmoid(z):
-    return 1.0 / (1 + np.exp(-z))
-
-def sigmoid_derivative(z):
-    return sigmoid(z) * (1.0 - sigmoid(z))
-
 # data_url = "http://lib.stat.cmu.edu/datasets/boston"
 data_url = "boston"
 raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
