@@ -150,6 +150,7 @@ def run(hparams, logdir):
         tf.summary.scalar('mean_squared_error', mse, step=1)
         tf.summary.scalar('r2', r2, step=1)
 
+session_num = 0
 for hidden in HP_HIDDEN.domain.values:
     for epochs in HP_EPOCHS.domain.values:
         for learning_rate in tf.linspace(HP_LEARNING_RATE.domain.min_value, HP_LEARNING_RATE.domain.max_value, 5):
