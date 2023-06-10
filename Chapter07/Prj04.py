@@ -4,7 +4,6 @@
 # Assignment: Project: 01, Chapter: 07, Book: "Python Machine Learning By Example"
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import numpy as np
 from sklearn.linear_model import SGDRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
