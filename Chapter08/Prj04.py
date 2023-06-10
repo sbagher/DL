@@ -4,6 +4,10 @@
 # Assignment: Project: 04, Chapter: 08, Book: "Python Machine Learning By Example"
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense
 
 def add_original_feature(df, df_new):
     df_new['open'] = df['Open']
@@ -91,3 +95,17 @@ end_test = '2022-12-31'
 data_test = data.loc[start_test:end_test]
 X_test = data_test.drop('close', axis=1).values
 y_test = data_test['close'].values
+
+scaler = StandardScaler()
+
+X_scaled_train = scaler.fit_transform(X_train)
+X_scaled_test = scaler.transform(X_test)
+
+
+model = Sequential([
+    Dense(units=32, activation='relu'),
+    Dense(units=1)
+    ])
+model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(0.1))
+model.fit(X_scaled_train, y_train, epochs=100, verbose=True)
+
