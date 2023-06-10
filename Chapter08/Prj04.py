@@ -139,3 +139,27 @@ def train_test_model(hparams, logdir):
     pred = model.predict(X_scaled_test)
     r2 = r2_score(y_test, pred)
     return mse, r2
+
+def run(hparams, logdir):
+    with tf.summary.create_file_writer(logdir).as_default():
+        hp.hparams_config(
+            hparams=[HP_HIDDEN, HP_EPOCHS, HP_LEARNING_RATE],
+            metrics=[hp.Metric('mean_squared_error', display_name='mse'), hp.Metric('r2', display_name='r2')],
+            )
+        mse, r2 = train_test_model(hparams, logdir)
+        tf.summary.scalar('mean_squared_error', mse, step=1)
+        tf.summary.scalar('r2', r2, step=1)
+
+for hidden in HP_HIDDEN.domain.values:
+    for epochs in HP_EPOCHS.domain.values:
+        for learning_rate in tf.linspace(HP_LEARNING_RATE.domain.min_value, HP_LEARNING_RATE.domain.max_value, 5):
+            hparams = {
+                HP_HIDDEN: hidden, 
+                HP_EPOCHS: epochs, 
+                HP_LEARNING_RATE:float("%.2f"%float(learning_rate)),
+                }
+            run_name = "run-%d" % session_num
+            print('--- Starting trial: %s' % run_name)
+            print({h.name: hparams[h] for h in hparams})
+            run(hparams, 'logs/hparam_tuning/' + run_name)
+            session_num += 1
