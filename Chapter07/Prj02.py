@@ -4,8 +4,9 @@
 # Assignment: Project: 02, Chapter: 07, Book: "Python Machine Learning By Example"
 
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn import datasets
+from sklearn.linear_model import SGDRegressor
+import tensorflow as tf
 
 def compute_prediction(X, weights):
     """
@@ -66,3 +67,17 @@ print(predictions)
 print(y_test)
 
 print("\nResult of 'Implementing linear regression with scikit-learn' section")
+regressor = SGDRegressor(loss='squared_error', penalty='l2', alpha=0.0001, learning_rate='constant', eta0=0.01, max_iter=1000)
+regressor.fit(X_train, y_train)
+predictions = regressor.predict(X_test)
+print(predictions)
+print(y_test)
+
+print("\nResult of 'Implementing linear regression with TensorFlow' section")
+layer0 = tf.keras.layers.Dense(units=1, input_shape=[X_train.shape[1]])
+model = tf.keras.Sequential(layer0)
+model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(1))
+model.fit(X_train, y_train, epochs=100, verbose=True)
+predictions = model.predict(X_test)[:, 0]
+print(predictions)
+print(y_test)
