@@ -53,6 +53,7 @@ def predict(X, weights):
     return compute_prediction(X, weights)
 
 diabetes = datasets.load_diabetes()
+print("\nResult of 'Implementing linear regression from scratch' section")
 print(diabetes.data.shape)
 num_test = 30
 X_train = diabetes.data[:-num_test, :]
@@ -63,3 +64,5 @@ y_test = diabetes.target[-num_test:]
 predictions = predict(X_test, weights)
 print(predictions)
 print(y_test)
+
+print("\nResult of 'Implementing linear regression with scikit-learn' section")
