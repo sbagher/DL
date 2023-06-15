@@ -139,7 +139,7 @@ model = Sequential([
 model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(0.1))
 model.fit(X_scaled_train, y_train, epochs=100, verbose=True)
 
-predictions = model.predict(X_scaled_test)
+predictions = model.predict(X_scaled_test)[:, 0]
 
 print(f'MSE: {mean_squared_error(y_test, predictions):.3f}')
 print(f'MAE: {mean_absolute_error(y_test, predictions):.3f}')
@@ -172,8 +172,6 @@ predictions = model.predict(X_scaled_test)[:, 0]
 import matplotlib.pyplot as plt
 plt.plot(data_test.index, y_test, c='k')
 plt.plot(data_test.index, predictions, c='b')
-plt.plot(data_test.index, predictions, c='r')
-plt.plot(data_test.index, predictions, c='g')
 plt.xticks(range(0, 252, 10), rotation=60)
 plt.xlabel('Date')
 plt.ylabel('Close price')
