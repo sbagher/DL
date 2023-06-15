@@ -128,7 +128,7 @@ weights = train_linear_regression(X_train, y_train, max_iter=100, learning_rate=
 
 X_test = np.array([[1.3], [3.5], [5.2], [2.8]])
 predictions = predict(X_test, weights)
-import matplotlib.pyplot as plt
+
 plt.scatter(X_train[:, 0], y_train, marker='o', c='b')
 plt.scatter(X_test[:, 0], predictions, marker='*', c='k')
 plt.xlabel('x')
