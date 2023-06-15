@@ -2,13 +2,9 @@
 # Student Number: 102501002
 # Class: Deep Learning
 # Assignment: Project: 01, Chapter: 07, Book: "Python Machine Learning By Example"
+
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import SGDRegressor
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVR
+import numpy as np
 import matplotlib.pyplot as plt
 
 def add_original_feature(df, df_new):
@@ -80,87 +76,61 @@ def generate_features(df):
     df_new = df_new.dropna(axis=0)
     return df_new
 
+def compute_prediction(X, weights):
+    """
+    Compute the prediction y_hat based on current weights
+    """
+    predictions = np.dot(X, weights)
+    return predictions
 
-data_raw = pd.read_csv('19930101-20221231.csv', index_col='Date')
+def update_weights_gd(X_train, y_train, weights, learning_rate):
+    """
+    Update weights by one step and return updated wights
+    """
+    predictions = compute_prediction(X_train, weights)
+    weights_delta = np.dot(X_train.T, y_train - predictions)
+    m = y_train.shape[0]
+    weights += learning_rate / float(m) * weights_delta
+    return weights
 
-data = generate_features(data_raw)
-print(data.round(decimals=3).head(5))
+def compute_cost(X, y, weights):
+    """
+    Compute the cost J(w)
+    """
+    predictions = compute_prediction(X, weights)
+    cost = np.mean((predictions - y) ** 2 / 2.0)
+    return cost
+def train_linear_regression(X_train, y_train, max_iter, learning_rate, fit_intercept=False):
+    """
+    Train a linear regression model with gradient descent, and return trained model
+    """
+    if fit_intercept:
+        intercept = np.ones((X_train.shape[0], 1))
+        X_train = np.hstack((intercept, X_train))
+    weights = np.zeros(X_train.shape[1])
+    for iteration in range(max_iter):
+        weights = update_weights_gd(X_train, y_train, weights, learning_rate)
+        # Check the cost for every 100 (for example) iterations
+        if iteration % 100 == 0:
+            print(compute_cost(X_train, y_train, weights))
+    return weights
 
-data = generate_features(data_raw)
-start_train = '1993-01-01'
-end_train = '2021-12-31'
-data_train = data.loc[start_train:end_train]
-X_train = data_train.drop('close', axis=1).values
-y_train = data_train['close'].values
-start_test = '2022-01-01'
-end_test = '2022-12-31'
-data_test = data.loc[start_test:end_test]
-X_test = data_test.drop('close', axis=1).values
-y_test = data_test['close'].values
-print(X_train.shape)
-print(y_train.shape)
-print(X_test.shape)
-print(y_test.shape)
+def predict(X, weights):
+    if X.shape[1] == weights.shape[0] - 1:
+        intercept = np.ones((X.shape[0], 1))
+        X = np.hstack((intercept, X))
+    return compute_prediction(X, weights)
 
-scaler = StandardScaler()
-X_scaled_train = scaler.fit_transform(X_train)
-X_scaled_test = scaler.transform(X_test)
+X_train = np.array([[6], [2], [3], [4], [1], [5], [2], [6], [4], [7]])
+y_train = np.array([5.5, 1.6, 2.2, 3.7, 0.8, 5.2, 1.5, 5.3, 4.4, 6.8])
 
-param_grid = {
-    "alpha": [1e-4, 3e-4, 1e-3],
-    "eta0": [0.01, 0.03, 0.1],
-    }
-lr = SGDRegressor(penalty='l2', max_iter=1000, random_state=42)
-grid_search = GridSearchCV(lr, param_grid, cv=5, scoring='r2')
-grid_search.fit(X_scaled_train, y_train)
+weights = train_linear_regression(X_train, y_train, max_iter=100, learning_rate=0.01, fit_intercept=True)
 
-print(grid_search.best_params_)
-lr_best = grid_search.best_estimator_
-predictions_lr = lr_best.predict(X_scaled_test)
-
-print(f'MSE: {mean_squared_error(y_test, predictions_lr):.3f}')
-print(f'MAE: {mean_absolute_error(y_test, predictions_lr):.3f}')
-print(f'R^2: {r2_score(y_test, predictions_lr):.3f}')
-
-param_grid = {
-    'max_depth': [30, 50],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [3, 5]
-    }
-rf = RandomForestRegressor(n_estimators=100, n_jobs=-1, max_features=1.0, random_state=42)
-grid_search = GridSearchCV(rf, param_grid, cv=5, scoring='r2', n_jobs=-1)
-grid_search.fit(X_train, y_train)
-
-print(grid_search.best_params_)
-rf_best = grid_search.best_estimator_
-predictions_rf = rf_best.predict(X_test)
-
-print(f'MSE: {mean_squared_error(y_test, predictions_rf):.3f}')
-print(f'MAE: {mean_absolute_error(y_test, predictions_rf):.3f}')
-print(f'R^2: {r2_score(y_test, predictions_rf):.3f}')
-
-param_grid = [
-    {'kernel': ['linear'], 'C': [100, 300, 500], 'epsilon': [0.00003, 0.0001]},
-    {'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],'C': [10, 100, 1000], 'epsilon': [0.00003, 0.0001]}
-]
-
-svr = SVR()
-grid_search = GridSearchCV(svr, param_grid, cv=5, scoring='r2')
-grid_search.fit(X_scaled_train, y_train)
-
-print(grid_search.best_params_)
-svr_best = grid_search.best_estimator_
-predictions_svr = svr_best.predict(X_scaled_test)
-print(f'MSE: {mean_squared_error(y_test, predictions_svr):.3f}')
-print(f'MAE: {mean_absolute_error(y_test, predictions_svr):.3f}')
-print(f'R^2: {r2_score(y_test, predictions_svr):.3f}')
-
-plt.plot(data_test.index, y_test, c='k')
-plt.plot(data_test.index, predictions_lr, c='b')
-plt.plot(data_test.index, predictions_rf, c='r')
-plt.plot(data_test.index, predictions_svr, c='g')
-plt.xticks(range(0, 252, 10), rotation=60)
-plt.xlabel('Date')
-plt.ylabel('Close price')
-plt.legend(['Truth', 'Linear regression', 'Random Forest', 'SVR'])
+X_test = np.array([[1.3], [3.5], [5.2], [2.8]])
+predictions = predict(X_test, weights)
+import matplotlib.pyplot as plt
+plt.scatter(X_train[:, 0], y_train, marker='o', c='b')
+plt.scatter(X_test[:, 0], predictions, marker='*', c='k')
+plt.xlabel('x')
+plt.ylabel('y')
 plt.show()
