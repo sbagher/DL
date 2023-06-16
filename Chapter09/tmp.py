@@ -16,3 +16,5 @@ print(word_tokenize(sent))
 sent2 = 'I have been to U.K. and U.S.A.'
 print(word_tokenize(sent2))
 
+import spacy
+nlp = spacy.load('en_core_web_sm')
