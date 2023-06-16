@@ -3,3 +3,5 @@
 # Class: Deep Learning
 # Assignment: Project: 01, Chapter: 09, Book: "Python Machine Learning By Example"
 
+from sklearn.datasets import fetch_20newsgroups
+roups = fetch_20newsgroups()
