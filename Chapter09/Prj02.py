@@ -10,3 +10,8 @@ import matplotlib.pyplot as plt
 
 groups = fetch_20newsgroups()
 
+count_vector = CountVectorizer(max_features=500)
+data_count = count_vector.fit_transform(groups.data)
+print (data_count.astype)
+print (data_count)
+print(data_count[0])
