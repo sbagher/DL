@@ -18,3 +18,14 @@ print(data_count[0])
 print(data_count.toarray()[0])
 
 print(count_vector.get_feature_names_out())
+
+data_cleaned = []
+for doc in groups.data:
+    doc_cleaned = ' '.join(word for word in doc.split() if word.isalpha())
+    data_cleaned.append(doc_cleaned)
+
+data_count = count_vector.fit_transform(data_cleaned)
+print(count_vector.get_feature_names_out())
+
+from sklearn.feature_extraction import stop_words
+print(stop_words.ENGLISH_STOP_WORDS)
