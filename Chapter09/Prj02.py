@@ -16,3 +16,5 @@ print (data_count.astype)
 print(data_count[0].astype)
 print(data_count[0])
 print(data_count.toarray()[0])
+
+print(count_vector.get_feature_names_out())
