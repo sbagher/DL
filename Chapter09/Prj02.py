@@ -29,3 +29,7 @@ print(count_vector.get_feature_names_out())
 
 from sklearn.feature_extraction import _stop_words
 print(_stop_words.ENGLISH_STOP_WORDS)
+
+count_vector_sw = CountVectorizer(stop_words="english", max_features=500)
+data_count = count_vector.fit_transform(data_cleaned)
+print(count_vector.get_feature_names_out())
