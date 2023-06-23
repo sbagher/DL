@@ -27,5 +27,5 @@ for doc in groups.data:
 data_count = count_vector.fit_transform(data_cleaned)
 print(count_vector.get_feature_names_out())
 
-from sklearn.feature_extraction import stop_words
-print(stop_words.ENGLISH_STOP_WORDS)
+from sklearn.feature_extraction import _stop_words
+print(_stop_words.ENGLISH_STOP_WORDS)
