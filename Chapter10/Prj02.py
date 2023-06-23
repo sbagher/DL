@@ -45,5 +45,16 @@ clusters = np.zeros(len(X))
 
 while iter < max_iter and centroids_diff > tol:
     for i in range(len(X)):
-    clusters[i] = assign_cluster(X[i], centroids)
+        clusters[i] = assign_cluster(X[i], centroids)
     centroids_prev = deepcopy(centroids)
+    update_centroids(X, centroids, clusters)
+    iter += 1
+    centroids_diff = np.linalg.norm(centroids - centroids_prev)
+    print('Iteration:', str(iter))
+    print('Centroids:\n', centroids)
+    print('Centroids move: {:5.4f}'.format(centroids_diff))
+    visualize_centroids(X, centroids)
+
+plt.scatter(X[:, 0], X[:, 1], c=clusters)
+plt.scatter(centroids[:, 0], centroids[:, 1], marker='*', s=200, c='#050505')
+plt.show()
