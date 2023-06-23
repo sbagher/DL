@@ -6,6 +6,7 @@
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.stem import WordNetLemmatizer
+from sklearn.manifold import TSNE
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -24,4 +25,3 @@ for doc in groups.data:
     data_cleaned.append(doc_cleaned)
 data_cleaned_count = count_vector_sw.fit_transform(data_cleaned)
 print(count_vector_sw.get_feature_names_out())
-
