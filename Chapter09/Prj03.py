@@ -24,3 +24,4 @@ for doc in groups.data:
     data_cleaned.append(doc_cleaned)
 data_cleaned_count = count_vector_sw.fit_transform(data_cleaned)
 print(count_vector_sw.get_feature_names_out())
+
