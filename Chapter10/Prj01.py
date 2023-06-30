@@ -11,6 +11,5 @@ iris = datasets.load_iris()
 X = iris.data[:, 2:4]
 y = iris.target
 
-print(iris.DESCR)
 plt.scatter(X[:,0], X[:,1], c=y)
 plt.show()
