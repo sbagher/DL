@@ -1,7 +1,7 @@
 # Name: Saeed Baghershahi
 # Student Number: 102501002
 # Class: Deep Learning
-# Assignment: Project: 03, Chapter: 10, Book: "Python Machine Learning By Example"
+# Assignment: Project: 04, Chapter: 10, Book: "Python Machine Learning By Example"
 
 from matplotlib import pyplot as plt
 from sklearn import datasets
