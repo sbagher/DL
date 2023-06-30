@@ -11,7 +11,7 @@ iris = datasets.load_iris()
 X = iris.data[:, 2:4]
 y = iris.target
 
-kmeans_sk = KMeans(n_clusters=3, random_state=42)
+kmeans_sk = KMeans(n_clusters=3, random_state=42, init='random', n_init='auto')
 kmeans_sk.fit(X)
 clusters_sk = kmeans_sk.labels_
 centroids_sk = kmeans_sk.cluster_centers_
