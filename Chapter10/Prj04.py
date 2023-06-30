@@ -15,7 +15,7 @@ k_list = list(range(1, 7))
 sse_list = [0] * len(k_list)
 
 for k_ind, k in enumerate(k_list):
-    kmeans = KMeans(n_clusters=k, random_state=42)
+    kmeans = KMeans(n_clusters=k, random_state=42, init='random', n_init='auto')
     kmeans.fit(X)
     clusters = kmeans.labels_
     centroids = kmeans.cluster_centers_
