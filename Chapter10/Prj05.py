@@ -6,6 +6,7 @@
 from sklearn.datasets import fetch_20newsgroups
 from nltk.corpus import names
 from nltk.stem import WordNetLemmatizer
+from sklearn.feature_extraction.text import CountVectorizer
 from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
 import numpy as np
@@ -32,3 +33,10 @@ for doc in groups.data:
     doc = doc.lower()
     doc_cleaned = ' '.join(lemmatizer.lemmatize(word) for word in doc.split() if word.isalpha() and word not in all_names)
     data_cleaned.append(doc_cleaned)
+
+count_vector = CountVectorizer(stop_words="english", max_features=None, max_df=0.5, min_df=2)
+data = count_vector.fit_transform(data_cleaned)
+
+k = 4
+kmeans = KMeans(n_clusters=k, random_state=42)
+kmeans.fit(data)
