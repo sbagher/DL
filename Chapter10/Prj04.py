@@ -25,3 +25,6 @@ for k_ind, k in enumerate(k_list):
         sse += np.linalg.norm(X[cluster_i] - centroids[i])
     print('k={}, SSE={}'.format(k, sse))
     sse_list[k_ind] = sse
+
+plt.plot(k_list, sse_list)
+plt.show()
