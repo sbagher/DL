@@ -7,6 +7,7 @@ from sklearn.datasets import fetch_20newsgroups
 from nltk.corpus import names
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
+from collections import Counter
 from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
 import numpy as np
@@ -41,3 +42,5 @@ k = 4
 kmeans = KMeans(n_clusters=k, random_state=42, init='random', n_init='auto')
 kmeans.fit(data)
 
+clusters = kmeans.labels_
+print(Counter(clusters))
