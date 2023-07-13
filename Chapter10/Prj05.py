@@ -7,6 +7,7 @@ from sklearn.datasets import fetch_20newsgroups
 from nltk.corpus import names
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import Counter
 from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
@@ -41,6 +42,11 @@ data = count_vector.fit_transform(data_cleaned)
 k = 4
 kmeans = KMeans(n_clusters=k, random_state=42, init='random', n_init='auto')
 kmeans.fit(data)
+clusters = kmeans.labels_
+print(Counter(clusters))
 
+tfidf_vector = TfidfVectorizer(stop_words='english', max_features=None, max_df=0.5, min_df=2)
+data = tfidf_vector.fit_transform(data_cleaned)
+kmeans.fit(data)
 clusters = kmeans.labels_
 print(Counter(clusters))
