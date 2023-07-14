@@ -1,7 +1,7 @@
 # Name: Saeed Baghershahi
 # Student Number: 102501002
 # Class: Deep Learning
-# Assignment: Project: 05, Chapter: 10, Book: "Python Machine Learning By Example"
+# Assignment: Project: 07, Chapter: 10, Book: "Python Machine Learning By Example"
 
 from sklearn.datasets import fetch_20newsgroups
 from nltk.corpus import names
