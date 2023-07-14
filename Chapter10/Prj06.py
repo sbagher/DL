@@ -39,3 +39,4 @@ for doc in groups.data:
 
 t = 20
 nmf = NMF(n_components=t, random_state=42)
+data = count_vector.fit_transform(data_cleaned)
