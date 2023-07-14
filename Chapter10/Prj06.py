@@ -20,7 +20,7 @@ categories = [
     'comp.graphics',
     'sci.space',
     ]
-groups = fetch_20newsgroups(subset='all', categories=categories)
+groups = fetch_20newsgroups()
 labels = groups.target
 label_names = groups.target_names
 def is_letter_only(word):
@@ -37,3 +37,5 @@ for doc in groups.data:
     doc_cleaned = ' '.join(lemmatizer.lemmatize(word) for word in doc.split() if word.isalpha() and word not in all_names)
     data_cleaned.append(doc_cleaned)
 
+t = 20
+nmf = NMF(n_components=t, random_state=42)
