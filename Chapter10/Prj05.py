@@ -50,3 +50,16 @@ data = tfidf_vector.fit_transform(data_cleaned)
 kmeans.fit(data)
 clusters = kmeans.labels_
 print(Counter(clusters))
+
+cluster_label = {i: labels[np.where(clusters == i)] for i in range(k)}
+terms = tfidf_vector.get_feature_names_out()
+centroids = kmeans.cluster_centers_
+for cluster, index_list in cluster_label.items():
+    counter = Counter(cluster_label[cluster])
+    print('cluster_{}: {} samples'.format(cluster, len(index_list)))
+    for label_index, count in sorted(counter.items(), key=lambda x: x[1], reverse=True):
+        print('{}: {} samples'.format(label_names[label_index], count))
+    print('Top 10 terms:')
+    for ind in centroids[cluster].argsort()[-10:]:
+        print(' %s' % terms[ind], end="")
+    print('\n')
