@@ -12,6 +12,7 @@ from collections import Counter
 from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
 import numpy as np
+from sklearn.decomposition import NMF
 
 categories = [
     'alt.atheism',
