@@ -42,3 +42,21 @@ count_vector = CountVectorizer(stop_words="english", max_features=None, max_df=0
 t = 20
 nmf = NMF(n_components=t, random_state=42)
 data = count_vector.fit_transform(data_cleaned)
+nmf.fit(data)
+print (nmf.components_)
+
+terms = count_vector.get_feature_names_out()
+for topic_idx, topic in enumerate(nmf.components_):
+    print("Topic {}:" .format(topic_idx))
+    print(" ".join([terms[i] for i in topic.argsort()[-10:]]))
+
+tfidf_vector = TfidfVectorizer(stop_words='english', max_features=None, max_df=0.5, min_df=2)
+nmf = NMF(n_components=t, random_state=42)
+data = tfidf_vector.fit_transform(data_cleaned)
+nmf.fit(data)
+print (nmf.components_)
+
+terms = tfidf_vector.get_feature_names_out()
+for topic_idx, topic in enumerate(nmf.components_):
+    print("Topic {}:" .format(topic_idx))
+    print(" ".join([terms[i] for i in topic.argsort()[-10:]]))
