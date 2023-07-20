@@ -4,6 +4,7 @@
 # Assignment: Project: 02, Chapter: 12, Book: "Python Machine Learning By Example"
 
 import tensorflow as tf
+from tensorflow.keras import datasets, layers, models, losses
 import matplotlib.pyplot as plt
 
 fashion_mnist = tf.keras.datasets.fashion_mnist
@@ -15,3 +16,5 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress',
 X_train = train_images.reshape((train_images.shape[0], 28, 28, 1))
 X_test = test_images.reshape((test_images.shape[0], 28, 28, 1))
 print(X_train.shape)
+
+tf.random.set_seed(42)
