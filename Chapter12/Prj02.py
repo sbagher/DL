@@ -40,3 +40,19 @@ print(predictions[0])
 
 print('Predicted label for the first test sample: ', np.argmax(predictions[0]))
 print('True label for the first test sample: ', test_labels[0])
+
+def plot_image_prediction(i, images, predictions, labels, class_names):
+    plt.subplot(1,2,1)
+    plt.imshow(images[i], cmap=plt.cm.binary)
+    prediction = np.argmax(predictions[i])
+    color = 'blue' if prediction == labels[i] else 'red'
+    plt.title(f"{class_names[labels[i]]} (predicted {class_names[prediction]})", color=color)
+    plt.subplot(1,2,2)
+    plt.grid(False)
+    plt.xticks(range(10))
+    plot = plt.bar(range(10), predictions[i], color="#777777") plt.ylim([0, 1])
+    plot[prediction].set_color('red')
+    plot[labels[i]].set_color('blue')
+    plt.show()
+
+plot_image_prediction(0, test_images, predictions, test_labels, class_names)
