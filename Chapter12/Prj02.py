@@ -50,9 +50,25 @@ def plot_image_prediction(i, images, predictions, labels, class_names):
     plt.subplot(1,2,2)
     plt.grid(False)
     plt.xticks(range(10))
-    plot = plt.bar(range(10), predictions[i], color="#777777") plt.ylim([0, 1])
+    plot = plt.bar(range(10), predictions[i], color="#777777")
+    plt.ylim([0, 1])
     plot[prediction].set_color('red')
     plot[labels[i]].set_color('blue')
     plt.show()
 
 plot_image_prediction(0, test_images, predictions, test_labels, class_names)
+
+filters, _ = model.layers[2].get_weights()
+
+f_min, f_max = filters.min(), filters.max()
+filters = (filters - f_min) / (f_max - f_min)
+
+n_filters = 16
+for i in range(n_filters):
+    filter = filters[:, :, :, i]
+    plt.subplot(4, 4, i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.imshow(filter[:, :, 0], cmap='gray')
+plt.show()
+
