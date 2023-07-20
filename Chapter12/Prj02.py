@@ -39,3 +39,4 @@ predictions = model.predict(X_test)
 print(predictions[0])
 
 print('Predicted label for the first test sample: ', np.argmax(predictions[0]))
+print('True label for the first test sample: ', test_labels[0])
