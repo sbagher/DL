@@ -6,6 +6,7 @@
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models, losses
 import matplotlib.pyplot as plt
+import numpy as np
 
 fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
@@ -30,3 +31,11 @@ model.add(layers.Dense(10, activation='softmax'))
 model.compile(optimizer='adam', loss=losses.sparse_categorical_crossentropy, metrics=['accuracy'])
 model.summary()
 model.fit(X_train, train_labels, validation_data=(X_test, test_labels), epochs=10)
+
+test_loss, test_acc = model.evaluate(X_test, test_labels, verbose=2)
+print('Accuracy on test set:', test_acc)
+
+predictions = model.predict(X_test)
+print(predictions[0])
+
+print('Predicted label for the first test sample: ', np.argmax(predictions[0]))
