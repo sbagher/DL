@@ -18,3 +18,5 @@ X_test = test_images.reshape((test_images.shape[0], 28, 28, 1))
 print(X_train.shape)
 
 tf.random.set_seed(42)
+model = models.Sequential()
+model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
