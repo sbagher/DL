@@ -21,3 +21,12 @@ X_train = X_train[:n_small]
 train_labels = train_labels[:n_small]
 print(X_train.shape)
 
+model = models.Sequential()
+model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.MaxPooling2D((2, 2)))
+model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(layers.Flatten())
+model.add(layers.Dense(32, activation='relu'))
+model.add(layers.Dense(10, activation='softmax'))
+
+model.compile(optimizer='adam', loss=losses.sparse_categorical_crossentropy, metrics=['accuracy'])
