@@ -4,11 +4,8 @@
 # Assignment: Project: 04, Chapter: 12, Book: "Python Machine Learning By Example"
 
 import tensorflow as tf
-from tensorflow.keras import datasets, layers, models, losses
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-from tensorflow.keras.preprocessing.image import ImageDataGenerator, load_img 
+from tensorflow.keras import layers, models, losses
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
