@@ -30,3 +30,17 @@ model.add(layers.Dense(32, activation='relu'))
 model.add(layers.Dense(10, activation='softmax'))
 
 model.compile(optimizer='adam', loss=losses.sparse_categorical_crossentropy, metrics=['accuracy'])
+model.fit(X_train, train_labels, validation_data=(X_test, test_labels), epochs=20, batch_size=40)
+
+test_loss, test_acc = model.evaluate(X_test, test_labels, verbose=2)
+print('Accuracy on test set:', test_acc)
+
+datagen = ImageDataGenerator(height_shift_range=3, horizontal_flip=True)
+model_aug = tf.keras.models.clone_model(model)
+
+model_aug.compile(optimizer='adam', loss=losses.sparse_categorical_crossentropy, metrics=['accuracy'])
+train_generator = datagen.flow(X_train, train_labels, seed=42, batch_size=40)
+model_aug.fit(train_generator, epochs=50, validation_data=(X_test, test_labels))
+
+test_loss, test_acc = model_aug.evaluate(X_test, test_labels, verbose=2)
+print('Accuracy on test set:', test_acc)
