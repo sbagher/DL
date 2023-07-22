@@ -1,7 +1,7 @@
 # Name: Saeed Baghershahi
 # Student Number: 102501002
 # Class: Deep Learning
-# Assignment: Project: 02, Chapter: 12, Book: "Python Machine Learning By Example"
+# Assignment: Project: 03, Chapter: 12, Book: "Python Machine Learning By Example"
 
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models, losses
