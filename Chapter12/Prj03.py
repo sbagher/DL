@@ -12,6 +12,14 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator, load_img
 
 def generate_plot_pics(datagen, original_img, save_prefix):
     folder = 'aug_images'
+    try:
+        ## if the preview folder does not exist, create
+        os.mkdir(folder)
+    except:
+        ## if the preview folder exists, then remove
+        ## the contents (pictures) in the folder
+        for item in os.listdir(folder):
+            os.remove(folder + "/" + item)
     i = 0
     for batch in datagen.flow(original_img.reshape((1, 28, 28, 1)), batch_size=1, save_to_dir=folder, save_prefix=save_prefix, save_format='jpeg'):
         i += 1
@@ -36,3 +44,5 @@ fashion_mnist = tf.keras.datasets.fashion_mnist
 datagen = ImageDataGenerator(horizontal_flip=True)
 generate_plot_pics(datagen, train_images[0], 'horizontal_flip')
 
+datagen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
+generate_plot_pics(datagen, train_images[0], 'hv_flip')
