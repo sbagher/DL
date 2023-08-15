@@ -21,3 +21,16 @@ X_test = pad_sequences(X_test, maxlen=maxlen)
 tf.random.set_seed(42)
 model = models.Sequential()
 
+embedding_size = 32
+model.add(layers.Embedding(vocab_size, embedding_size))
+model.add(layers.LSTM(50))
+model.add(layers.Dense(1, activation='sigmoid'))
+print(model.summary())
+
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+batch_size = 64
+n_epoch = 3
+model.fit(X_train, y_train, batch_size=batch_size, epochs=n_epoch, validation_data=(X_test, y_test))
+
+acc = model.evaluate(X_test, y_test, verbose = 0)[1]
+print('Test accuracy:', acc)
