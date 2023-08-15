@@ -20,7 +20,6 @@ X_test = pad_sequences(X_test, maxlen=maxlen)
 
 tf.random.set_seed(42)
 model = models.Sequential()
-
 embedding_size = 32
 model.add(layers.Embedding(vocab_size, embedding_size))
 model.add(layers.LSTM(50))
