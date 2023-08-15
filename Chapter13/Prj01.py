@@ -23,3 +23,7 @@ review_lengths = [len(x) for x in X_train]
 
 plt.hist(review_lengths, bins=10)
 plt.show()
+
+maxlen = 200
+X_train = pad_sequences(X_train, maxlen=maxlen)
+X_test = pad_sequences(X_test, maxlen=maxlen)
