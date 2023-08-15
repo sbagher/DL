@@ -34,6 +34,9 @@ print(char_to_index)
 seq_length = 160
 n_seq = int(n_chars / seq_length)
 
+X = np.zeros((n_seq, seq_length, n_vocab))
+Y = np.zeros((n_seq, seq_length, n_vocab))
+
 for i in range(n_seq):
     x_sequence = raw_text[i * seq_length : (i + 1) * seq_length]
     x_sequence_ohe = np.zeros((seq_length, n_vocab))
@@ -49,3 +52,6 @@ for i in range(n_seq):
         index = char_to_index[char]
         y_sequence_ohe[j][index] = 1.
     Y[i] = y_sequence_ohe
+
+print (X.shape)
+print (Y.shape)
