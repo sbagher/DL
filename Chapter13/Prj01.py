@@ -10,3 +10,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 vocab_size = 5000
 (X_train, y_train), (X_test, y_test) = imdb.load_data(num_words=vocab_size)
+
+print('Number of training samples:', len(y_train))
+print('Number of positive samples', sum(y_train))
+print('Number of test samples:', len(y_test))
+print(X_train[0])
