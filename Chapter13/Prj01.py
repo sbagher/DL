@@ -6,4 +6,4 @@
 import tensorflow as tf
 from tensorflow.keras.datasets import imdb
 from tensorflow.keras import layers, models, losses, optimizers
-from tensorflow.keras.preprocessing.sequence import pad_ sequences
+from tensorflow.keras.preprocessing.sequence import pad_sequences
