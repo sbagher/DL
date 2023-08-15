@@ -27,7 +27,7 @@ model.add(layers.LSTM(50, dropout=0.2))
 model.add(layers.Dense(1, activation='sigmoid'))
 print(model.summary())
 
-optimizer = optimizers.Adam(llearning_rate=0.003)
+optimizer = optimizers.Adam(learning_rate=0.003)
 model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 batch_size = 64
 n_epoch = 7
