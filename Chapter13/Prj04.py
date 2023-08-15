@@ -25,3 +25,7 @@ chars = sorted(list(set(raw_text)))
 n_vocab = len(chars)
 print(f'Total vocabulary (unique characters): {n_vocab}')
 print(chars)
+
+index_to_char = dict((i, c) for i, c in enumerate(chars))
+char_to_index = dict((c, i) for i, c in enumerate(chars))
+print(char_to_index)
