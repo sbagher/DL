@@ -27,3 +27,6 @@ plt.show()
 maxlen = 200
 X_train = pad_sequences(X_train, maxlen=maxlen)
 X_test = pad_sequences(X_test, maxlen=maxlen)
+
+print('X_train shape after padding:', X_train.shape)
+print('X_test shape after padding:', X_test.shape)
