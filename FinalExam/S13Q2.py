@@ -19,25 +19,6 @@ maxlen = 200
 X_train = pad_sequences(X_train, maxlen=maxlen)
 X_test = pad_sequences(X_test, maxlen=maxlen)
 
-tf.random.set_seed(42)
-model = models.Sequential()
-embedding_size = 32
-model.add(layers.Embedding(vocab_size, embedding_size))
-model.add(layers.LSTM(50, return_sequences=True, dropout=0.2))
-model.add(layers.LSTM(50, dropout=0.2))
-model.add(layers.Dense(1, activation='sigmoid'))
-print(model.summary())
-
-optimizer = optimizers.Adam(learning_rate=0.003)
-model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
-batch_size = 64
-n_epoch = 7
-model.fit(X_train, y_train, batch_size=batch_size, epochs=n_epoch, validation_data=(X_test, y_test))
-
-acc = model.evaluate(X_test, y_test, verbose=0)[1]
-print('Test accuracy with stacked LSTM:', acc)
-
-#---------------------------------------------------
 def train_test_model(hparams):
     model = models.Sequential()
     model.add(layers.Embedding(vocab_size, hparams[HP_EMBEDDING_SIZE]))
@@ -45,10 +26,11 @@ def train_test_model(hparams):
     model.add(layers.LSTM(hparams[HP_LSTM2], hparams[HP_DROPOUT2]))
     model.add(layers.Dense(1, activation='sigmoid'))
 
-    model.compile(optimizer='adam', loss=losses.sparse_categorical_crossentropy, metrics=['accuracy'])
-    model.fit(train_generator, validation_data=(X_test, test_labels), epochs=hparams[HP_EPOCHS], batch_size=40)
+    optimizer = optimizers.Adam(learning_rate=hparams[HP_LEARNING_RATE])
+    model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+    model.fit(X_train, y_train, batch_size=batch_size, epochs=hparams[HP_EPOCHS], validation_data=(X_test, y_test))
 
-    _, accuracy = model.evaluate(X_test, test_labels, verbose=2)
+    accuracy = model.evaluate(X_test, y_test, verbose=0)[1]
 
     return accuracy
 
@@ -59,13 +41,14 @@ def run(hparams, logdir):
         tf.summary.scalar('accuracy', accuracy, step=1)
 
 HP_EMBEDDING_SIZE = hp.HParam('embedding_size', hp.Discrete([16,32,48])) 
-HP_LSTM1 = hp.HParam('1st LSTM layer', hp.Discrete([32,64,128]))
-HP_LSTM2 = hp.HParam('2nd LSTM layer', hp.Discrete([32,64,128]))
-HP_DROPOUT1 = hp.HParam('1st layer dropout', hp.Discrete([0.2,0.5]))
-HP_DROPOUT2 = hp.HParam('2nd layer dropout', hp.Discrete([0.2,0.5]))
+HP_LSTM1 = hp.HParam('1st LSTM layer', hp.Discrete([32,64,96]))
+HP_LSTM2 = hp.HParam('2nd LSTM layer', hp.Discrete([32,64,96]))
+HP_DROPOUT1 = hp.HParam('1st layer dropout', hp.Discrete([0.2,0.4]))
+HP_DROPOUT2 = hp.HParam('2nd layer dropout', hp.Discrete([0.2,0.4]))
 HP_LEARNING_RATE = hp.HParam('learning_rate', hp.RealInterval(0.002, 0.2))
 HP_EPOCHS = hp.HParam('epochs', hp.Discrete([7, 14, 21]))
 
+tf.random.set_seed(42)
 session_num = 0
 for embedding_size in HP_EMBEDDING_SIZE.domain.values:
     for lstm1 in HP_LSTM1.domain.values:
@@ -83,8 +66,8 @@ for embedding_size in HP_EMBEDDING_SIZE.domain.values:
                                 HP_LEARNING_RATE: learning_rate,
                                 HP_EPOCHS: epoch,
                                 }
-                    run_name = "run-%d" % session_num
-                    print('--- Starting trial: %s' % run_name)
-                    print({h.name: hparams[h] for h in hparams})
-                    run(hparams, 'logs/hparam_tuning/' + run_name)
-                    session_num += 1
+                            run_name = "run-%d" % session_num
+                            print('--- Starting trial: %s' % run_name)
+                            print({h.name: hparams[h] for h in hparams})
+                            run(hparams, 'logs/hparam_tuning/' + run_name)
+                            session_num += 1
