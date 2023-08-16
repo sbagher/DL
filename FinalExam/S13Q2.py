@@ -41,12 +41,12 @@ def run(hparams, logdir):
         accuracy = train_test_model(hparams)
         tf.summary.scalar('accuracy', accuracy, step=1)
 
-HP_EMBEDDING_SIZE = hp.HParam('embedding_size', hp.Discrete([16,32,48])) 
+HP_EMBEDDING_SIZE = hp.HParam('embedding size', hp.Discrete([16,32,48])) 
 HP_LSTM1 = hp.HParam('1st LSTM layer', hp.Discrete([32,64,96]))
 HP_LSTM2 = hp.HParam('2nd LSTM layer', hp.Discrete([32,64,96]))
-HP_DROPOUT1 = hp.HParam('1st layer dropout', hp.Discrete([0.2,0.4]))
-HP_DROPOUT2 = hp.HParam('2nd layer dropout', hp.Discrete([0.2,0.4]))
-HP_LEARNING_RATE = hp.HParam('learning_rate', hp.RealInterval(0.002, 0.2))
+HP_DROPOUT1 = hp.HParam('1st layer dropout', hp.RealInterval(0.2,0.4))
+HP_DROPOUT2 = hp.HParam('2nd layer dropout', hp.RealInterval(0.2,0.4))
+HP_LEARNING_RATE = hp.HParam('learning rate', hp.RealInterval(0.002, 0.2))
 HP_EPOCHS = hp.HParam('epochs', hp.Discrete([7, 14, 21]))
 
 tf.random.set_seed(42)
@@ -54,17 +54,17 @@ session_num = 0
 for embedding_size in HP_EMBEDDING_SIZE.domain.values:
     for lstm1 in HP_LSTM1.domain.values:
         for lstm2 in HP_LSTM2.domain.values:
-            for dropout1 in HP_DROPOUT1.domain.values:
-                for dropout2 in HP_DROPOUT2.domain.values:
+            for dropout1 in (HP_DROPOUT1.domain.min_value, HP_DROPOUT1.domain.max_value):
+                for dropout2 in (HP_DROPOUT2.domain.min_value, HP_DROPOUT2.domain.max_value):
                     for learning_rate in tf.linspace(HP_LEARNING_RATE.domain.min_value, HP_LEARNING_RATE.domain.max_value, 5):
                         for epoch in HP_EPOCHS.domain.values:
                             hparams = {
-                                HP_EMBEDDING_SIZE: embedding_size, 
+                                HP_EMBEDDING_SIZE: embedding_size,
                                 HP_LSTM1: lstm1,
                                 HP_LSTM2: lstm2,
                                 HP_DROPOUT1: dropout1,
                                 HP_DROPOUT2: dropout2,
-                                HP_LEARNING_RATE: learning_rate,
+                                HP_LEARNING_RATE:float("%.2f"%float(learning_rate)),
                                 HP_EPOCHS: epoch,
                                 }
                             run_name = "run-%d" % session_num
