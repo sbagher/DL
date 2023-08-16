@@ -23,8 +23,8 @@ batch_size = 100
 def train_test_model(hparams):
     model = models.Sequential()
     model.add(layers.Embedding(vocab_size, hparams[HP_EMBEDDING_SIZE]))
-    model.add(layers.LSTM(hparams[HP_LSTM1], hparams[HP_DROPOUT1], return_sequences=True))
-    model.add(layers.LSTM(hparams[HP_LSTM2], hparams[HP_DROPOUT2]))
+    model.add(layers.LSTM(hparams[HP_LSTM1], return_sequences=True, dropout=hparams[HP_DROPOUT1]))
+    model.add(layers.LSTM(hparams[HP_LSTM2], dropout=hparams[HP_DROPOUT2]))
     model.add(layers.Dense(1, activation='sigmoid'))
 
     optimizer = optimizers.Adam(learning_rate=hparams[HP_LEARNING_RATE])
