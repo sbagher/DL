@@ -40,12 +40,10 @@ print('Test accuracy with stacked LSTM:', acc)
 #---------------------------------------------------
 def train_test_model(hparams):
     model = models.Sequential()
-    model.add(layers.Conv2D(hparams[HP_NUM_UNITS1], (3, 3), activation='relu', input_shape=(28, 28, 1)))
-    model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Conv2D(hparams[HP_NUM_UNITS2], (3, 3), activation='relu'))
-    model.add(layers.Flatten())
-    model.add(layers.Dense(hparams[HP_NUM_UNITS3], activation='relu'))
-    model.add(layers.Dense(hparams[HP_NUM_UNITS4], activation='softmax'))
+    model.add(layers.Embedding(vocab_size, hparams[HP_EMBEDDING_SIZE]))
+    model.add(layers.LSTM(hparams[HP_LSTM1], hparams[HP_DROPOUT1], return_sequences=True))
+    model.add(layers.LSTM(hparams[HP_LSTM2], hparams[HP_DROPOUT2]))
+    model.add(layers.Dense(1, activation='sigmoid'))
 
     model.compile(optimizer='adam', loss=losses.sparse_categorical_crossentropy, metrics=['accuracy'])
     model.fit(train_generator, validation_data=(X_test, test_labels), epochs=hparams[HP_EPOCHS], batch_size=40)
@@ -65,22 +63,26 @@ HP_LSTM1 = hp.HParam('1st LSTM layer', hp.Discrete([32,64,128]))
 HP_LSTM2 = hp.HParam('2nd LSTM layer', hp.Discrete([32,64,128]))
 HP_DROPOUT1 = hp.HParam('1st layer dropout', hp.Discrete([0.2,0.5]))
 HP_DROPOUT2 = hp.HParam('2nd layer dropout', hp.Discrete([0.2,0.5]))
-HP_LEARNING_RATE = hp.HParam('learning_rate', hp.RealInterval(0.003, 0.3))
-HP_EPOCHS = hp.HParam('epochs', hp.Discrete([10, 20]))
+HP_LEARNING_RATE = hp.HParam('learning_rate', hp.RealInterval(0.002, 0.2))
+HP_EPOCHS = hp.HParam('epochs', hp.Discrete([7, 14, 21]))
 
 session_num = 0
-for first in HP_NUM_UNITS1.domain.values:
-    for second in HP_NUM_UNITS2.domain.values:
-        for third in HP_NUM_UNITS3.domain.values:
-            for fourth in HP_NUM_UNITS4.domain.values:
-                for epoch in HP_EPOCHS.domain.values:
-                    hparams = {
-                        HP_NUM_UNITS1: first, 
-                        HP_NUM_UNITS2: second, 
-                        HP_NUM_UNITS3: third, 
-                        HP_NUM_UNITS4: fourth, 
-                        HP_EPOCHS: epoch, 
-                        }
+for embedding_size in HP_EMBEDDING_SIZE.domain.values:
+    for lstm1 in HP_LSTM1.domain.values:
+        for lstm2 in HP_LSTM2.domain.values:
+            for dropout1 in HP_DROPOUT1.domain.values:
+                for dropout2 in HP_DROPOUT2.domain.values:
+                    for learning_rate in tf.linspace(HP_LEARNING_RATE.domain.min_value, HP_LEARNING_RATE.domain.max_value, 5):
+                        for epoch in HP_EPOCHS.domain.values:
+                            hparams = {
+                                HP_EMBEDDING_SIZE: embedding_size, 
+                                HP_LSTM1: lstm1,
+                                HP_LSTM2: lstm2,
+                                HP_DROPOUT1: dropout1,
+                                HP_DROPOUT2: dropout2,
+                                HP_LEARNING_RATE: learning_rate,
+                                HP_EPOCHS: epoch,
+                                }
                     run_name = "run-%d" % session_num
                     print('--- Starting trial: %s' % run_name)
                     print({h.name: hparams[h] for h in hparams})
