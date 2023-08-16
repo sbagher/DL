@@ -18,6 +18,7 @@ word_index = imdb.get_word_index()
 maxlen = 200
 X_train = pad_sequences(X_train, maxlen=maxlen)
 X_test = pad_sequences(X_test, maxlen=maxlen)
+batch_size = 100
 
 def train_test_model(hparams):
     model = models.Sequential()
