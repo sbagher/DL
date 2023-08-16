@@ -64,7 +64,7 @@ for embedding_size in HP_EMBEDDING_SIZE.domain.values:
                                 HP_LSTM2: lstm2,
                                 HP_DROPOUT1: dropout1,
                                 HP_DROPOUT2: dropout2,
-                                HP_LEARNING_RATE:float("%.2f"%float(learning_rate)),
+                                HP_LEARNING_RATE: float("%.3f"%float(learning_rate)),
                                 HP_EPOCHS: epoch,
                                 }
                             run_name = "run-%d" % session_num
