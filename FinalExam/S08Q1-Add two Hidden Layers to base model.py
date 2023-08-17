@@ -169,5 +169,5 @@ for hidden1 in HP_HIDDEN1.domain.values:
                     run_name = "run-%d" % session_num
                     print('--- Starting trial: %s' % run_name)
                     print({h.name: hparams[h] for h in hparams})
-                    run(hparams, 'logs8N2/hparam_tuning/' + run_name)
+                    run(hparams, 'logs8N3/hparam_tuning/' + run_name)
                     session_num += 1
