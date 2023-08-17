@@ -83,7 +83,7 @@ def generate_features(df):
 def train_test_model(hparams, logdir):
     model = Sequential([
         Dense(units=hparams[HP_HIDDEN], activation='relu'),
-        Dense(units=hparams[HP_DROPOUT], activation='relu'),
+        tf.keras.layers.Dropout(hparams[HP_DROPOUT]),
         Dense(units=1)
         ])
     model.compile(loss='mean_squared_error',
