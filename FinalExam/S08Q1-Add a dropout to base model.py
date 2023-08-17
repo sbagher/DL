@@ -114,9 +114,7 @@ def run(hparams, logdir):
 data_raw = pd.read_csv('19930101-20221231.csv', index_col='Date')
 
 data = generate_features(data_raw)
-print(data.round(decimals=3).head(5))
 
-data = generate_features(data_raw)
 start_train = '1993-01-01'
 end_train = '2021-12-31'
 data_train = data.loc[start_train:end_train]
@@ -133,19 +131,6 @@ scaler = StandardScaler()
 X_scaled_train = scaler.fit_transform(X_train)
 X_scaled_test = scaler.transform(X_test)
 
-model = Sequential([
-    Dense(units=32, activation='relu'),
-    Dense(units=1)
-    ])
-model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(0.1))
-model.fit(X_scaled_train, y_train, epochs=100, verbose=True)
-
-predictions = model.predict(X_scaled_test)[:, 0]
-
-print(f'MSE: {mean_squared_error(y_test, predictions):.3f}')
-print(f'MAE: {mean_absolute_error(y_test, predictions):.3f}')
-print(f'R^2: {r2_score(y_test, predictions):.3f}')
-
 HP_HIDDEN = hp.HParam('1st hidden layer', hp.Discrete([64, 32, 16]))
 HP_DROPOUT = hp.HParam('dropout', hp.RealInterval(0.2,0.4))
 HP_EPOCHS = hp.HParam('epochs', hp.Discrete([300, 1000]))
@@ -158,7 +143,7 @@ for hidden in HP_HIDDEN.domain.values:
             for learning_rate in tf.linspace(HP_LEARNING_RATE.domain.min_value, HP_LEARNING_RATE.domain.max_value, 5):
                 hparams = {
                     HP_HIDDEN: hidden, 
-                    HP_DROPOUT: dropout, 
+                    HP_DROPOUT: dropout,
                     HP_EPOCHS: epochs, 
                     HP_LEARNING_RATE:float("%.2f"%float(learning_rate)),
                     }
