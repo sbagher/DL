@@ -114,9 +114,7 @@ def run(hparams, logdir):
 data_raw = pd.read_csv('19930101-20221231.csv', index_col='Date')
 
 data = generate_features(data_raw)
-print(data.round(decimals=3).head(5))
 
-data = generate_features(data_raw)
 start_train = '1993-01-01'
 end_train = '2021-12-31'
 data_train = data.loc[start_train:end_train]
@@ -132,19 +130,6 @@ scaler = StandardScaler()
 
 X_scaled_train = scaler.fit_transform(X_train)
 X_scaled_test = scaler.transform(X_test)
-
-model = Sequential([
-    Dense(units=32, activation='relu'),
-    Dense(units=1)
-    ])
-model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(0.1))
-model.fit(X_scaled_train, y_train, epochs=100, verbose=True)
-
-predictions = model.predict(X_scaled_test)[:, 0]
-
-print(f'MSE: {mean_squared_error(y_test, predictions):.3f}')
-print(f'MAE: {mean_absolute_error(y_test, predictions):.3f}')
-print(f'R^2: {r2_score(y_test, predictions):.3f}')
 
 HP_HIDDEN1 = hp.HParam('1st hidden layer', hp.Discrete([64, 32, 16]))
 HP_HIDDEN2 = hp.HParam('2nd hidden layer', hp.Discrete([64, 32, 16]))
@@ -165,5 +150,5 @@ for hidden1 in HP_HIDDEN1.domain.values:
                 run_name = "run-%d" % session_num
                 print('--- Starting trial: %s' % run_name)
                 print({h.name: hparams[h] for h in hparams})
-                run(hparams, 'logs/hparam_tuning/' + run_name)
+                run(hparams, 'logs8N1/hparam_tuning/' + run_name)
                 session_num += 1
