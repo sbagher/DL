@@ -10,9 +10,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import matplotlib.pyplot as plt
 import numpy as np
 
-training_file = 'warpeace_input.txt'
+training_file = 'poems.txt'
 raw_text = open(training_file, 'r').read()
-raw_text = raw_text[3:3196216]
 raw_text = raw_text.lower()
 
 print(raw_text[:200])
