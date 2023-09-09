@@ -1,20 +1,23 @@
 # Name: Saeed Baghershahi
 # Student Number: 102501002
 # Class: Deep Learning
-# Assignment: Project: 04, Chapter: 13, Book: "Python Machine Learning By Example"
+# Assignment: Final Project, Phase One: Data Cleaning & Test, Poet: Parvin E'tesami, Book: "Python Machine Learning By Example"
 
 import tensorflow as tf
-from tensorflow.keras.datasets import imdb
 from tensorflow.keras import layers, models, losses, optimizers
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import matplotlib.pyplot as plt
 import numpy as np
+import arabic_reshaper
+from bidi.algorithm import get_display
 
 training_file = 'poems.txt'
 raw_text = open(training_file, 'r').read()
-raw_text = raw_text.lower()
 
-print(raw_text[:200])
+reshaped_text = arabic_reshaper.reshape(raw_text[:200])
+bidi_text = get_display(reshaped_text)
+print(bidi_text)
+
 all_words = raw_text.split()
 unique_words = list(set(all_words))
 print(f'Number of unique words: {len(unique_words)}')
