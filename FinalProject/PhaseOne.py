@@ -11,8 +11,8 @@ import numpy as np
 import arabic_reshaper
 from bidi.algorithm import get_display
 
-training_file = 'poems.txt'
-raw_text = open(training_file, 'r').read()
+training_file = 'poems-utf8-same-weight.txt'
+raw_text = open(training_file, 'r', encoding="utf-8").read()
 
 reshaped_text = arabic_reshaper.reshape(raw_text[:200])
 bidi_text = get_display(reshaped_text)
@@ -20,6 +20,7 @@ print(bidi_text)
 
 all_words = raw_text.split()
 unique_words = list(set(all_words))
+print(f'Number of all words: {len(all_words)}')
 print(f'Number of unique words: {len(unique_words)}')
 n_chars = len(raw_text)
 print(f'Total characters: {n_chars}')
