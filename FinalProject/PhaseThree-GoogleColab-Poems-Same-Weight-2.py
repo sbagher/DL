@@ -54,7 +54,7 @@ tf.random.set_seed(42)
 hidden_units = 700
 dropout = 0.05
 batch_size = 100
-n_epoch= 600
+n_epoch= 300
 model = models.Sequential()
 model.add(layers.LSTM(hidden_units, input_shape=(None, n_vocab), return_sequences=True, dropout=dropout))
 model.add(layers.LSTM(hidden_units, return_sequences=True, dropout=dropout))
