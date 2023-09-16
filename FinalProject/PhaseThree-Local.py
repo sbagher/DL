@@ -1,7 +1,7 @@
 # Name: Saeed Baghershahi
 # Student Number: 102501002
 # Class: Deep Learning
-# Assignment: Final Project, Phase Two: Running Model, Poet: Parvin E'tesami, Book: "Python Machine Learning By Example"
+# Assignment: Final Project, Phase Three: Running Model, Poet: Parvin E'tesami, Book: "Python Machine Learning By Example"
 
 import tensorflow as tf
 from tensorflow.keras import layers, models, losses, optimizers
@@ -49,7 +49,7 @@ for i in range(n_seq):
 
 tf.random.set_seed(42)
 hidden_units = 700
-dropout = 0.4
+dropout = 0.05
 batch_size = 100
 n_epoch= 300
 model = models.Sequential()
@@ -57,7 +57,7 @@ model.add(layers.LSTM(hidden_units, input_shape=(None, n_vocab), return_sequence
 model.add(layers.LSTM(hidden_units, return_sequences=True, dropout=dropout))
 model.add(layers.TimeDistributed(layers.Dense(n_vocab, activation='softmax')))
 
-optimizer = optimizers.RMSprop(lr=0.001)
+optimizer = optimizers.RMSprop(lr=0.01)
 model.compile(loss="categorical_crossentropy", optimizer=optimizer)
 print(model.summary())
 

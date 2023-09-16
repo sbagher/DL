@@ -1,7 +1,7 @@
 # Name: Saeed Baghershahi
 # Student Number: 102501002
 # Class: Deep Learning
-# Assignment: Final Project, Phase One: Data Cleaning & Test, Poet: Parvin E'tesami, Book: "Python Machine Learning By Example"
+# Assignment: Final Project, Phase Two: Data Cleaning & Test, Poet: Parvin E'tesami, Book: "Python Machine Learning By Example"
 
 import random
 

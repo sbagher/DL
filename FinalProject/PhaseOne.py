@@ -11,7 +11,7 @@ import numpy as np
 import arabic_reshaper
 from bidi.algorithm import get_display
 
-training_file = 'poems-utf8-same-weight.txt'
+training_file = 'poems-utf8.txt'
 raw_text = open(training_file, 'r', encoding="utf-8").read()
 
 reshaped_text = arabic_reshaper.reshape(raw_text[:200])

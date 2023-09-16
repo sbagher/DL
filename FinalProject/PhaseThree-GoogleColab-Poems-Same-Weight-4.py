@@ -1,7 +1,7 @@
 # Name: Saeed Baghershahi
 # Student Number: 102501002
 # Class: Deep Learning
-# Assignment: Final Project, Phase Two: Running Model, Poet: Parvin E'tesami, Book: "Python Machine Learning By Example"
+# Assignment: Final Project, Phase Three: Running Model, Poet: Parvin E'tesami, Book: "Python Machine Learning By Example"
 
 import tensorflow as tf
 from keras import layers, models, losses, optimizers
